@@ -1,0 +1,91 @@
+@import "src/styles/styles";
+
+@mixin showBtn {
+    width: 56px;
+    height: 56px;
+    border: 1px solid $color-point;
+    background-color: $background-color;
+    font-size: 20px;
+}
+
+@mixin hideBtn {
+    width: 6px;
+    height: 6px;
+    background-color: $black-blue;
+    border: 0;
+    font-size: 0;
+}
+
+.circle  {
+    $size: 530 / 1920 * 100vw;
+    width: $size;
+    height: $size;
+
+    border: 1px solid $color-line20;
+    border-radius: 50%;
+
+    position: relative;
+    transition: 500ms;
+    margin: 80px auto 0;
+}
+
+
+.axis {
+    position: absolute;
+    background-color: $color-line10;
+    transition: 500ms;
+
+    &X {
+        width: 100%;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        height: 1px;
+
+    }
+
+    &Y {
+        width: 1px;
+        height: 100vh;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}
+
+.point {
+    @include hideBtn;
+    border-radius: 50%;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: 500ms;
+
+    &:hover,
+    &--active {
+        @include showBtn;
+    }
+}
+
+.point-info {
+    color: $black-blue;
+    position: relative;
+}
+
+.point-category {
+    font-weight: 700;
+    position: absolute;
+    left: 50px;
+    font-size: 20px;
+    transition: 500ms;
+
+    &--hide {
+        opacity: 0;
+    }
+}

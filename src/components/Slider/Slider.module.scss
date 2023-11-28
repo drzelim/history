@@ -1,0 +1,47 @@
+@import "src/styles/styles";
+
+.slider {
+    opacity: 1;
+    transition: 500ms;
+    position: relative;
+    margin-top: 50px;
+    cursor: grab;
+
+    @media screen and (max-width: $mobile) {
+        position: static;
+        margin-top: 60px;
+    }
+
+    &--hide {
+        opacity: 0;
+    }
+}
+
+.slide {
+    margin: 0 customClamp(7.5, 35);
+
+    &:first-child {
+        margin-left: 0;
+    }
+
+    &__year {
+        font-family: 'Bebas Neue', sans-serif;
+        font-size: customClamp(16, 25);
+        color: $color-blue;
+    }
+
+    &__text {
+        font-size: customClamp(14, 20);
+        color: $black-blue;
+        margin-top: 15px;
+    }
+}
+
+.category-name {
+    position: relative;
+
+    span {
+        left: $padding-left;
+        bottom: -40px;
+    }
+}

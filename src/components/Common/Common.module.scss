@@ -1,0 +1,65 @@
+@import "src/styles/styles";
+
+.section {
+    width: var(--pageWidth);
+    margin: 0 auto;
+
+    border-right: 1px solid $color-line10;
+    border-left: 1px solid $color-line10;
+
+    padding: clamp(60px, 9vw, 100px) 0 0 0; // Уменьшил верхний padding, чтобы все помещалось в один экран на 1080p
+    position: relative;
+
+    @media screen and (max-width: $mobile) {
+        min-height: 90vh;
+    }
+
+    .title-h1 {
+        margin: 0;
+        padding-left: $padding-left;
+        font-family: "PT Sans-Bold", sans-serif;
+        font-size: customClamp(20, 56);
+        font-weight: 700;
+
+        position: absolute;
+
+        @media screen and (max-width: $mobile) {
+            position: static;
+        }
+
+        div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: translate(-50%);
+
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #3877EE -5%, #EF5DA8 85%);
+        }
+    }
+}
+
+
+.axis {
+    position: absolute;
+    background-color: $color-line10;
+
+    &X {
+        width: 100%;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        height: 1px;
+
+    }
+
+    &Y {
+        width: 1px;
+        height: 100vh;
+        top: 0;
+        bottom: 0;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+}

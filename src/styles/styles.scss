@@ -1,0 +1,19 @@
+@import 'mixin';
+
+$color: rgba(66, 86, 122, 1);
+$color-line10: rgba(66, 86, 122, .1);
+$color-line20: rgba(66, 86, 122, .2);
+$color-line50: rgba(66, 86, 122, .5);
+$color-point: rgba(48, 62, 88, 0.5);
+
+
+$color-blue: #3877EE;
+$black-blue: #42567A;
+
+$background-color: #F4F5F9;
+
+$color-white: #FFFFFF;
+
+$padding-left: customClamp(20, 80, 1.3);
+
+$mobile: 768px;

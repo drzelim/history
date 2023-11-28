@@ -1,0 +1,8 @@
+@function fs($max, $ratio) {
+    $result: calc(#{$max} / 1920 * #{$ratio} * 100vw);
+    @return $result;
+}
+
+@function customClamp($min, $max, $ratio: 1.5) {
+    @return clamp($min * 1px, fs($max, $ratio), $max * 1px);
+}

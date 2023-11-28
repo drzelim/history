@@ -1,0 +1,84 @@
+@import "src/styles/styles";
+
+*, html {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'PT Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    color: $color;
+    background-color: $background-color;
+}
+
+.App {
+    min-height: 100vh;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+@font-face {
+    font-family: 'PT Sans';
+    src: url('./fonts/PTSans-Regular.ttf');
+    src: local('PT Sans'),
+        /*url('/fotns/PTSans-Regular.woff2') format('woff2'),*/
+        /*url('/fotns/PTSans-Regular.woff') format('woff'),*/
+    url('./fonts/PTSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'PT Sans-Bold';
+    src: url('./fonts/PTSans-Bold.ttf');
+    src: local('PT Sans-Bold'),
+        /*url('/fotns/PTSans-Bold.woff2') format('woff2'),*/
+        /*url('/fotns/PPTSans-Bold.woff') format('woff'),*/
+    url('./fonts/PTSans-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Bebas Neue';
+    src: url('./fonts/BebasNeue-Regular.ttf');
+    src: local('Bebas Neue'),
+        /*url('/fotns/BebasNeue-Regular.woff2') format('woff2'),*/
+        /*url('/fotns/BebasNeue-Regular.woff') format('woff'),*/
+    url('./fonts/BebasNeue-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --pageWidth: calc(1440 / 1920 * 100vw);
+
+    @media screen and (max-width: $mobile) {
+        --pageWidth: 100%;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.mobile-hidden {
+    @media screen and (max-width: $mobile) {
+        display: none !important;
+    }
+}
+
+.desktop-hidden {
+    @media screen and (min-width: $mobile) {
+        display: none !important;
+    }
+}
