@@ -13,7 +13,7 @@ const Common = observer(() => {
 
   useEffect(() => {
     getData();
-  }, []);
+  }, [getData]);
 
   return (
     <div className={styles['section']}>
