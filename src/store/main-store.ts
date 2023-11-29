@@ -5,7 +5,6 @@ import {IHistoricalEvents} from "../api/interfaces";
 class MainStore {
   historicalEvents: IHistoricalEvents[] = [];
   activeSlider = 1;
-  circleCenter = 0;
 
   constructor() {
     makeAutoObservable(this, {}, {deep: true});
@@ -16,10 +15,6 @@ class MainStore {
       return;
     }
     this.activeSlider = value;
-  }
-
-  setCircleCenter = (value: number) => {
-    this.circleCenter = value;
   }
 
   setHistoricalEvents = (data: any) => {

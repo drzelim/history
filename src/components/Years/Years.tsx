@@ -15,8 +15,8 @@ const getGsapVars = (count: number) => {
   }
 };
 
-const Years = observer(() => {
-  const {activeSlider, historicalEvents, circleCenter} = MainStore;
+const Years: React.FC<{circleCenter: number}> = observer(({circleCenter}) => {
+  const {activeSlider, historicalEvents} = MainStore;
 
   const firstYear = useRef(historicalEvents[activeSlider - 1]?.yearsRange[0]);
   const secondYear = useRef(historicalEvents[activeSlider - 1]?.yearsRange[1]);

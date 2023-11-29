@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import styles from './Circle.module.scss';
 import {observer} from "mobx-react-lite";
 import MainStore from "../../store/main-store";
 import CirclePoint, {ICoordinates} from "./CirclePoint";
+import {getCN} from "../../utils/utils";
+import Years from "../Years/Years";
 
 
 const getCoordinates = (count: number, radius: number): ICoordinates[] => {
@@ -28,10 +30,11 @@ const getCoordinates = (count: number, radius: number): ICoordinates[] => {
 
 
 const Circle = observer(() => {
-  const {activeSlider, setCircleCenter, historicalEvents} = MainStore;
+  const {activeSlider, historicalEvents} = MainStore;
   const circleRef = React.useRef<HTMLDivElement | null>(null);
   const [coordinates, setCoordinates] = useState<ICoordinates[]>([]);
   const timerDebounceRef = React.useRef<ReturnType<typeof setInterval>>();
+  const [circleCenter, setCircleCenter] = useState(0);
 
   const offsetAngle = 360 / historicalEvents.length;
   const angle = offsetAngle * (activeSlider - 1);
@@ -48,22 +51,21 @@ const Circle = observer(() => {
     }, time);
   };
 
+  const calculationPosition = useCallback((circleElem: HTMLElement) => {
+    const radius = circleElem.offsetHeight / 2;
+    setCircleCenter(radius + circleElem.offsetTop);
+    setCoordinates(getCoordinates(historicalEvents.length, radius));
+  }, [historicalEvents]);
+
 
   React.useEffect(() => {
     const circleElem = circleRef.current;
     if (!circleElem) {
       return;
     }
+    calculationPosition(circleElem);
 
-    const rect = circleElem.getBoundingClientRect();
-    const diameter = rect.bottom - rect.top;
-    const radius = diameter / 2;
-    const rotationalOffset = (rect.top + rect.bottom - diameter) / 2;
-    setCircleCenter(rotationalOffset + radius);
-
-    setCoordinates(getCoordinates(historicalEvents.length, radius));
-
-  }, [historicalEvents, setCircleCenter]);
+  }, [historicalEvents, calculationPosition]);
 
   React.useEffect(() => {
     const resizeHandler = () => {
@@ -73,42 +75,44 @@ const Circle = observer(() => {
       }
 
       setTimeout(() => {
-        handleDebounceResize(() => {
-          const radius = circleElem.offsetHeight / 2;
-          const rect = circleElem.getBoundingClientRect();
-          setCoordinates(getCoordinates(historicalEvents.length, radius));
-          const rotationalOffset = (rect.top + rect.bottom - circleElem.offsetHeight) / 2;
-          setCircleCenter(rotationalOffset + radius);
-        }, 50);
+        handleDebounceResize(() => calculationPosition(circleElem), 50);
       }, 500);
     }
 
     window.addEventListener('resize', resizeHandler);
     return () => window.removeEventListener('resize', resizeHandler);
 
-  }, [coordinates, historicalEvents, setCircleCenter]);
+  // eslint-disable-next-line
+  }, [coordinates, historicalEvents]);
 
   if (window.innerWidth <= 768) {
-    return <></>
+    return <Years circleCenter={circleCenter}/>
   }
 
   return (
-    <div className={styles['circle']}
-         style={style}
-         ref={circleRef}
-    >
+    <>
+      <div style={{top: circleCenter + 'px'}}
+           className={getCN(styles['axis'], styles['axisX'], 'mobile-hidden')}
+      />
+      <div className={styles['circle']}
+           style={style}
+           ref={circleRef}
+      >
 
-      {
-        coordinates.map((item, index) => (
-          <CirclePoint
-            key={item.x.toString() + item.y.toString()}
-            num={index + 1}
-            coordinates={item}
-            angle={angle}
-          />
-        ))
-      }
-    </div>
+        {
+          coordinates.map((item, index) => (
+            <CirclePoint
+              key={item.x.toString() + item.y.toString()}
+              num={index + 1}
+              coordinates={item}
+              angle={angle}
+            />
+          ))
+        }
+      </div>
+      <Years circleCenter={circleCenter}/>
+    </>
+
   );
 });
 
